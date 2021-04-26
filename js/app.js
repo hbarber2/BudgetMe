@@ -407,7 +407,7 @@ var controller = (function(budgetCtrl, UICtrl) {
 			input.value > 0
 		) {
 			//2. Add the item to the budget controller
-			newItem = budgetCtrl.addItem(
+			newItem = budgetCtrl.addItem (
 				input.type,
 				input.description,
 				input.value
@@ -465,10 +465,20 @@ var controller = (function(budgetCtrl, UICtrl) {
 	var addNote = document.getElementById("add-note");
 	var ul = document.getElementById("list");
 	var notesArray = [];
+	var inputRoot = document.getElementById('user-input');
+
 	
 	// Add event listener for click
 
-	addNote.addEventListener('click', () => {
+	addNote.addEventListener("click", addInput);
+
+	inputRoot.addEventListener("keypress", function(event) {
+		if (event.code === 'Enter') {
+			addInput();
+		}
+	});
+
+	function addInput() {
 		var input = document.getElementById('user-input').value;
 		
 		if(input !== '') {
@@ -487,12 +497,11 @@ var controller = (function(budgetCtrl, UICtrl) {
 			
 			document.getElementById(idNum).addEventListener('click', (e) => {
 				e.target.parentNode.remove();
-
 			});
 		
 		};
 		
-	});
+	};
 
 	return {
 		init: function() {
@@ -507,6 +516,6 @@ var controller = (function(budgetCtrl, UICtrl) {
 			setUpEventListeners();
 		}
 	};
-})(budgetController, UIController);
+}(budgetController, UIController));
 
 controller.init();
